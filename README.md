@@ -1,37 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PrinceFirms Web
 
-## Getting Started
+The public-facing website for PrinceFirms — a hyperlocal commerce platform where
+every store feed, listing and delivery is ranked by distance from the customer.
 
-First, run the development server:
+This repo is the **visitor site** today. The admin portal will be added here once
+the Go backend exposes its admin APIs.
+
+## Stack
+
+| | |
+| --- | --- |
+| Framework | Next.js 16 (App Router, React 19) |
+| Styling | Tailwind CSS v4 (CSS-first config in `src/app/globals.css`) |
+| Language | TypeScript, strict mode |
+| Lint | ESLint 9 flat config + `eslint-config-next` |
+
+## Getting started
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — dev server
+- `npm run build` — production build
+- `npm start` — serve the production build
+- `npm run lint` — ESLint
 
-## Learn More
+## Layout
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/
+    layout.tsx     Root layout: fonts, metadata, viewport
+    page.tsx       Landing page
+    globals.css    Tailwind import + design tokens
+    icon.svg       Favicon (Next.js app-icon convention)
+    robots.ts      Generated /robots.txt
+    sitemap.ts     Generated /sitemap.xml
+  components/      Presentational components (server components by default)
+  lib/site.ts      Site name, tagline, description, canonical URL, nav
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Anything that appears in both the UI and in metadata lives in `src/lib/site.ts` —
+edit it there rather than in individual components.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Configuration
 
-## Deploy on Vercel
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | `https://princefirms.com` | Canonical origin used for `metadataBase`, Open Graph URLs, `robots.txt` and the sitemap. Set this on preview deployments. |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Conventions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# PrinceFirms-Web
+Next.js 16 differs from older App Router releases in places. Before writing code,
+read the relevant guide in `node_modules/next/dist/docs/` rather than relying on
+memory — see `AGENTS.md`.
