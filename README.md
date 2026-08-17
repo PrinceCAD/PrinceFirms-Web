@@ -30,9 +30,29 @@ Then open http://localhost:3000.
 ## Scripts
 
 - `npm run dev` — dev server
-- `npm run build` — production build
-- `npm start` — serve the production build
+- `npm run build` — static export into `out/`
+- `npm run preview` — build, then serve `out/` through the Workers runtime locally
+- `npm run deploy` — build, then publish to Cloudflare Workers
 - `npm run lint` — ESLint
+
+## Deployment
+
+The site is a **static export** (`output: "export"` in `next.config.ts`). Every
+route is prerendered at build time, so there is no Node server to run — `npm run
+build` produces a plain `out/` directory of HTML, CSS, JS and fonts.
+
+It is hosted on **Cloudflare Workers** as an assets-only Worker (no `main` script
+in `wrangler.jsonc`), on the `princefirms.com` domain that already sits in the
+Cloudflare account.
+
+Because the export has no server runtime, these Next.js features are unavailable
+until the site moves to a server target: Server Actions, Route Handlers that read
+the request, `cookies()`, middleware/proxy, ISR, redirects/rewrites/headers in
+`next.config.ts`, and `next/image` with the default loader. Client-side calls to
+the Go backend are unaffected and work fine.
+
+Metadata routes (`robots.ts`, `sitemap.ts`) carry `export const dynamic =
+"force-static"`, which static export requires.
 
 ## Layout
 

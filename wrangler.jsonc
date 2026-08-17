@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "princefirms-web",
+  "compatibility_date": "2026-08-17",
+  // Assets-only Worker: no `main`, because `next build` with output: "export"
+  // produces a fully prerendered site with no server runtime to run.
+  "assets": {
+    "directory": "./out",
+    // Next.js emits 404.html; serve it with a real 404 status.
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}
